@@ -1,0 +1,12 @@
+apiVersion: opentelemetry.io/v1alpha1
+kind: Instrumentation
+metadata:
+        name: demo
+        namespace: demo
+spec:
+        exporter:
+                endpoint: http://otel-gateway.observability.svc.cluster.local:4317
+        nodejs:
+                image: ghcr.io/open-telemetry/opentelemetry-operator/autoinstrumentation-nodejs:latest
+        python:
+                image: ghcr.io/open-telemetry/opentelemetry-operator/autoinstrumentation-python:latest

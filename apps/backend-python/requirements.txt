@@ -1,0 +1,4 @@
+flask
+opentelemetry-sdk
+opentelemetry-instrumentation
+opentelemetry-exporter-otlp

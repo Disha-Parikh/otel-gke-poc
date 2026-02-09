@@ -1,0 +1,5 @@
+provisionalDataStore:
+        cassandra: false
+allInOne:
+        enabled: true
+
