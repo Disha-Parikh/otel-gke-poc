@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+  namespace: demo
+  labels:
+    app: backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+      annotations:
+        instrumentation.opentelemetry.io/inject-python: "true"
+    spec:
+      containers:
+      - name: backend
+        image: gcr.io/YOUR_PROJECT/backend:latest
+        ports:
+        - containerPort: 8080
+        env:
+        - name: OTEL_SERVICE_NAME
+          value: backend
+        - name: OTEL_EXPORTER_OTLP_ENDPOINT
+          value: http://otel-gateway.observability:4317
+        - name: OTEL_TRACES_EXPORTER
+          value: otlp
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend
+  namespace: demo
+spec:
+  selector:
+    app: backend
+  ports:
+  - port: 8080
+    targetPort: 8080
+
